@@ -8,7 +8,7 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="SFMC Ninja - develop SFMC platform like a Ninja" />
-<meta property="og:description" content="Use this tricks and tips on AMPscript, SSJS, SFMC API, WSproxy, codesnippets and SFMC platform secretes." />
+<meta property="og:description" content="Use this tricks and tips on AMPscript, SSJS, SFMC API, WSproxy, SQL code snippets and SFMC platform secrets." />
 <meta property="og:url" content="https://cvvishalkumar.github.io/sfmc-ninja/" />
 <meta property="og:site_name" content="SFMC Ninja" />
     <title>SFMC Ninja</title>
@@ -36,16 +36,19 @@
             <li>Useful resources</li>
           </a>
           <a class="nav-link" href="#ampscript">
-            <li>AMPscript</li>
+            <li>AMPscript snippets</li>
           </a>
           <a class="nav-link" href="#ssjs">
-            <li>SSJS</li>
+            <li>SSJS snippets</li>
           </a>
           <a class="nav-link" href="#apis">
-            <li>SFMC APIs</li>
+            <li>SFMC API snippets</li>
           </a>
           <a class="nav-link" href="#wsproxy">
-            <li>WSProxy</li>
+            <li>WSProxy snippets</li>
+          </a>
+          <a class="nav-link" href="#SQL">
+            <li>SQL snippets</li>
           </a>
         </ul>
       </nav>
@@ -72,14 +75,17 @@
 
          </article>
        </section>
-
+       <b class="hr anim"></b>
        <section id="ampscript" class="main-section">
         <header>AMPscript</header>
 
+<!--AMP Block1 -->
 <p>Don't be surprized! This is tag based syntax of AMPscript!!</p>
 <pre><code class="language-js" >&lt;script runat=&#39;server&#39; language=&#39;ampscript&#39;&gt;
-  Output(Concat(&#39;Welcome &#39;, &#39;to SFMC-NINJA&#39;))
+  Output(Concat(&#39;Welcome &#39;,&#39;to SFMC-NINJA&#39;))
 &lt;/script&gt;</code></pre>
+<br>
+<!-- AMP Block2 -->
 <br>
 <p>Email Salutation  - snippet</p>
 <pre><code class="language-js" >%%[
@@ -88,15 +94,37 @@
 ]%%
   
 Dear %%=v(@Salutation)=%%,</code></pre>
+<br>
 
+<!-- AMP Block3 -->
+<br>
+<p>Excluding code execution - SendPreview and test send</p>
+<pre><code class="language-js" >IF (_messagecontext != &#x22;PREVIEW&#x22; AND _isTestSend != true) THEN
+  CreateSalesforceObject(.....
+ENDIF</code></pre>
+<br>
+
+<!-- AMP Block4 -->
+<br>
+<p>Hiding the Veiew As Web Page - when viewed on browser</p>
+<pre><code class="language-js" >%%[IF _messagecontext != &#x27;VAWP&#x27; THEN]%%
+  &#x3C;table border=&#x22;0&#x22; cellspacing=&#x22;0&#x22; cellpadding=&#x22;0&#x22; align=&#x22;center&#x22; width=&#x22;100%&#x22; style=&#x22;background-color:#ffffff;&#x22; bgcolor=&#x22;#ffffff&#x22;&#x3E;
+           &#x3C;tr&#x3E;
+            &#x3C;td valign=&#x22;middle&#x22; align=&#x22;center&#x22; style=&#x22;font-family: Arial, sans-serif;  font-size:12px; color:#000001&#x22;&#x3E;
+             To view this email as a web page, click &#x3C;a href=&#x22;%%view_email_url%%&#x22; target=&#x22;_blank&#x22; style=&#x22;text-decoration:underline; color:blue;&#x22;&#x3E;here&#x3C;/a&#x3E;.&#x3C;/td&#x3E;
+           &#x3C;/tr&#x3E;
+          &#x3C;/table&#x3E;
+%%[ENDIF]%%</code></pre>
+<br>
 
       </section>
-
+      <b class="hr anim"></b>
       <section id="ssjs" class="main-section">
         <header>SSJS - Server Side Java Script</header>
-        
-        <p>Basic syntax of SSJS [with try/catch]</p>
-        <pre><code class="language-js" >&lt;script runat=&quot;server&quot;&gt;
+
+<!-- SSJS block1 -->
+<p>Basic syntax of SSJS [with try/catch]</p>
+<pre><code class="language-js" >&lt;script runat=&quot;server&quot;&gt;
 Platform.Load(&quot;Core&quot;,&quot;1.1&quot;);
 try{
 &lt;/script&gt;
@@ -106,20 +134,176 @@ try{
 &lt;script runat=&quot;server&quot;&gt;
 } catch(Error) { Write(Stringify(Error)); }
 &lt;/script&gt;</code></pre>
+<br>
 
+<br>
+<!-- SSJS block2 -->
+<pre><code class="language-js" ></code></pre>
+<br>
       </section>
-
+      <b class="hr anim"></b>
 <section id="apis" class="main-section">
   <header>SFMC | REST - SOAP APIs</header>
-  <p>Please refer the below link to get all the latest API endpoints with usage details, <a href="https://www.postman.com/salesforce-developers/workspace/salesforce-developers/request/14448118-2c11c812-8375-459a-978c-2338dd5f0c0e">Salesforce Developers</a> </p>
-  
+  <p>Please refer the below link to get all the latest API endpoints with usage details,<br> <a href="https://www.postman.com/salesforce-developers/workspace/salesforce-developers/request/14448118-2c11c812-8375-459a-978c-2338dd5f0c0e">Salesforce Developers</a> </p>
+  <br>
+
+  <br>
+  <!-- SOAP block1 -->
+  <p>API to create TSD [Triggered Send Definition]</p>
+  <pre><code class="language-js">POST HTTP/1.1
+Host: https://{{et_subdomain}}.soap.marketingcloudapis.com/Service.asmx
+Content-Type: text/xml
+
+    &#x3C;?xml version=&#x22;1.0&#x22; encoding=&#x22;UTF-8&#x22;?&#x3E;
+    &#x3C;s:Envelope xmlns:s=&#x22;http://www.w3.org/2003/05/soap-envelope&#x22; xmlns:a=&#x22;http://schemas.xmlsoap.org/ws/2004/08/addressing&#x22; xmlns:u=&#x22;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd&#x22;&#x3E;
+       &#x3C;s:Header&#x3E;
+            &#x3C;a:Action s:mustUnderstand=&#x22;1&#x22;&#x3E;Create&#x3C;/a:Action&#x3E;
+            &#x3C;a:MessageID&#x3E;urn:uuid:7e0cca04-57bd-4481-864c-6ea8039d2ea0&#x3C;/a:MessageID&#x3E;
+            &#x3C;a:ReplyTo&#x3E;
+                &#x3C;a:Address&#x3E;http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous&#x3C;/a:Address&#x3E;
+            &#x3C;/a:ReplyTo&#x3E;    
+            &#x3C;a:To s:mustUnderstand=&#x22;1&#x22;&#x3E;{{soapEndPoint}}&#x3C;/a:To&#x3E;
+            &#x3C;fueloauth xmlns=&#x22;http://exacttarget.com&#x22;&#x3E;{{accessToken}}&#x3C;/fueloauth&#x3E;
+       &#x3C;/s:Header&#x3E;
+       &#x3C;s:Body xmlns:xsd=&#x22;http://www.w3.org/2001/XMLSchema&#x22; xmlns:xsi=&#x22;http://www.w3.org/2001/XMLSchema-instance&#x22;&#x3E;
+        &#x3C;CreateRequest xmlns=&#x22;http://exacttarget.com/wsdl/partnerAPI&#x22;&#x3E;
+            &#x3C;Options/&#x3E;
+                &#x3C;Objects xsi:type=&#x22;TriggeredSendDefinition&#x22;&#x3E;
+                    &#x3C;PartnerKey xsi:nil=&#x22;true&#x22;/&#x3E;
+                    &#x3C;ObjectID xsi:nil=&#x22;true&#x22;/&#x3E;
+                    &#x3C;CustomerKey&#x3E;xxxx&#x3C;/CustomerKey&#x3E; //External-ID of your NEW TSD
+                    &#x3C;Name&#x3E;xxx&#x3C;/Name&#x3E; //Name of your NEW TSD
+                    &#x3C;SendClassification&#x3E;
+                        &#x3C;PartnerKey xsi:nil=&#x22;true&#x22;/&#x3E;
+                        &#x3C;CustomerKey&#x3E;12345&#x3C;/CustomerKey&#x3E; //External-ID of your Send classification
+                        &#x3C;ObjectID xsi:nil=&#x22;true&#x22;/&#x3E;
+                    &#x3C;/SendClassification&#x3E;
+                    &#x3C;Email&#x3E;
+                        &#x3C;PartnerKey xsi:nil=&#x22;true&#x22;/&#x3E;
+                        &#x3C;ObjectID xsi:nil=&#x22;true&#x22;/&#x3E;
+                        &#x3C;ID&#x3E;123456&#x3C;/ID&#x3E; //Email-ID of your email in Content builder
+                    &#x3C;/Email&#x3E;
+                    &#x3C;SendSourceDataExtension&#x3E;
+                        &#x3C;CustomerKey&#x3E;xxxx-xxxx-xxxx-xxxx-xxxx&#x3C;/CustomerKey&#x3E; //External-ID of your TriggeredSendDataExtension
+                    &#x3C;/SendSourceDataExtension&#x3E;
+                &#x3C;/Objects&#x3E;
+        &#x3C;/CreateRequest&#x3E;
+       &#x3C;/s:Body&#x3E;
+    &#x3C;/s:Envelope&#x3E;</code></pre>
+  <br> 
 </section>
 
+<b class="hr anim"></b>
 <section id="wsproxy" class="main-section">
   <header>WSproxy - WebSocket Proxy</header>
-  <p>Coming soon!</p>
+
+<br>
+
+<br>
+<!-- WSproxy block1 -->
+<p><span class="use-case">Use case: </span>Adding subscriber to List/Publication list</p>
+<span style="color:#f9b520;">Email code</span>
+<pre><code class="language-js">%%[
+  SET @sub = [_subscriberkey]
+  SET @email = [emailaddr]
+]%%
   
+Click here to &#x3C;a href=&#x22;%%=RedirectTo(CloudPagesURL(7777,&#x22;sub&#x22;,@sub,&#x22;email&#x22;,@email))=%%&#x22;&#x3E;Subscribe&#x3C;/a&#x3E;</code></pre>
+<span style="color:#f9b520;">Cloud Page code</span>
+<pre><code class="language-js">%%[
+  SET @sub = RequestParameter(&#x27;sub&#x27;) 
+  SET @email = RequestParameter(&#x27;email&#x27;)
+  SET @Listid = &#x22;xxxxx&#x22;
+  SET @listemailexist = Lookup(&#x22;_ListSubscribers&#x22;,&#x22;EmailAddress&#x22;,&#x22;ListID&#x22;, @Listid,&#x22;EmailAddress&#x22;, @email)
+]%%
+  
+%%[if @listemailexist == @email Then]%%
+    &#x3C;p&#x3E;You are already subscribed!&#x3C;/p&#x3E;
+%%[ELSE]%%
+  &#x3C;script runat=&#x22;server&#x22;&#x3E;
+  Platform.Load(&#x22;core&#x22;,&#x22;1.1.5&#x22;); 
+  var prox = new Script.Util.WSProxy();
+  var options = {SaveOptions: [{&#x27;PropertyName&#x27;: &#x27;*&#x27;, SaveAction: &#x27;UpdateAdd&#x27;}]};
+  
+  //getting values from AMPSCRIPT variables to SSJS variables
+  var email = Variable.GetValue(&#x22;@email&#x22;);
+  var subscriberkey = Variable.GetValue(&#x22;@sub&#x22;);
+  
+  function AddToSub(obj) {
+  var props = { 
+  SubscriberKey: subscriberkey,
+  EmailAddress: email,
+  Lists: [{
+  ID: obj.listID,
+  Status: &#x27;Active&#x27; // to unsub = &#x22;Unsubscribed&#x22; to subscribe = &#x22;Active&#x22;
+  }]
+  };
+  var data = prox.updateItem(&#x22;Subscriber&#x22;, props, options);
+  return data.Results[0].StatusCode;
+  }
+  
+  var myPubLists = [
+  {mid:&#x27;1000xxxxxx&#x27;, listID:&#x27;xxxxx&#x27;}
+  ];
+  
+  for (var i=0; i&#x3C;myPubLists.length; i++) {
+  var result = AddToSub(myPubLists[i]);
+  Write(&#x22;You have been successfully subscribed!&#x22;);
+  }
+  &#x3C;/script&#x3E;
+%%[ENDIF]%%</code></pre>
+<br>
+
 </section>
 
+<section id="SQL" class="main-section">
+    <h1>Some useful SQL snippets based on reallife implementations</h1>
+    <article>
+      <br>
+      <!-- SQL block1 -->
+      <p><span class="use-case">Use case: </span>Get BOUNCE/OPEN/SENT of previous day for a given TSD</p>
+      <pre><code class="language-js" >SELECT Count(su.SubscriberKey) as &#x27;Sent_count&#x27;,
+CONVERT(date, DATEADD(dd, -1, getdate())) as &#x27;Sent_On&#x27;,
+&#x27;Your_TSD_External_Key&#x27; as &#x27;TSD_name&#x27;
+FROM [_Sent] s
+JOIN [_Subscribers] su
+ON s.SubscriberID = su.SubscriberID
+WHERE DateDiff(day,s.EventDate,GetDate()) = 1
+AND s.TriggeredSendCustomerKey = &#x27;Your_TSD_External_Key&#x27;
+</code></pre>
+<pre><code class="language-js">
+SELECT Count(su.SubscriberKey) as &#x27;Open_count&#x27;,
+&#x27;Your_TSD_externalKey&#x27; as &#x27;TSD_name&#x27;
+FROM [_Open] o
+JOIN [_Subscribers] su
+ON o.SubscriberID = su.SubscriberID
+WHERE DateDiff(day,o.eventdate,GetDate()) = 1
+AND o.IsUnique = &#x27;true&#x27;
+AND o.TriggeredSendCustomerKey = &#x27;Your_TSD_externalKey&#x27;
+</code></pre>
+<pre><code class="language-js">
+SELECT Count(su.SubscriberKey) as &#x27;Bounce_count&#x27;,
+&#x27;Your_TSD_ExternalKey&#x27; as &#x27;TSD_name&#x27;
+FROM [_Bounce] b
+JOIN [_Subscribers] su
+ON b.SubscriberID = su.SubscriberID
+WHERE b.EventDate &#x3E; dateadd(hh,-24,getdate())
+AND b.TriggeredSendCustomerKey = &#x27;Your_TSD_ExternalKey&#x27;
+</code></pre>
+      <br>
+
+      <br>
+      <!-- SQL block2 -->
+      <p><span class="use-case">Use case: </span>SQL to Export List subscribers to Data Extension along with Profile attributes</p>
+    <pre><code class="language-js">SELECT L.EmailAddress as &#x27;Email Address&#x27;, E.[First Name], 
+E.[Last Name], E.Company, E.Phone, E.Country
+FROM _ListSubscribers L
+INNER JOIN ENT._EnterpriseAttribute E //Note this works on only Enterprise 2.0 accounts
+ON E._SubscriberID = L.SubscriberID
+WHERE L.ListID = &#x27;xxx&#x27; //this is your LIST ID</code></pre>
+
+
+    </article>
+</section>
 </main>
 </body></html>
