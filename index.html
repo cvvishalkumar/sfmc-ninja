@@ -80,11 +80,14 @@
 <pre><code class="language-js" >&lt;script runat=&#39;server&#39; language=&#39;ampscript&#39;&gt;
   Output(Concat(&#39;Welcome &#39;, &#39;to SFMC-NINJA&#39;))
 &lt;/script&gt;</code></pre>
-
-<p>Don't be surprized! This is tag based syntax of AMPscript!!</p>
-<pre><code class="language-js" >&lt;script runat=&#39;server&#39; language=&#39;ampscript&#39;&gt;
-  Output(Concat(&#39;Welcome &#39;, &#39;to SFMC-NINJA&#39;))
-&lt;/script&gt;</code></pre>
+<br>
+<p>Email Salutation  - snippet</p>
+<pre><code class="language-js" >%%[
+  set @FirstName = AttributeValue(&#x22;FirstName&#x22;)
+  set @Salutation = iif(length(@FirstName) &#x3E; 1, ProperCase(@FirstName), &#x22;Customer&#x22;)
+]%%
+  
+Dear %%=v(@Salutation)=%%,</code></pre>
 
 
       </section>
