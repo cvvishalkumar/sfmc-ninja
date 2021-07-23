@@ -2,15 +2,15 @@
   <head>
     <meta charset="UTF-8">
     <meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-<link rel="canonical" href="https://cvvishalkumar.github.io/sfmc-ninja/" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="SFMC Ninja - develop SFMC platform like a Ninja" />
-<meta property="og:description" content="Use this tricks and tips on AMPscript, SSJS, SFMC API, WSproxy, SQL code snippets and SFMC platform secrets." />
-<meta property="og:url" content="https://cvvishalkumar.github.io/sfmc-ninja/" />
-<meta property="og:site_name" content="SFMC Ninja" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://cvvishalkumar.github.io/sfmc-ninja/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="SFMC Ninja - develop SFMC platform like a Ninja" />
+    <meta property="og:description" content="Use this tricks and tips on AMPscript, SSJS, SFMC API, WSproxy, SQL code snippets and SFMC platform secrets." />
+    <meta property="og:url" content="https://cvvishalkumar.github.io/sfmc-ninja/" />
+    <meta property="og:site_name" content="SFMC Ninja" />
     <title>SFMC Ninja</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Oswald:500|Roboto" rel="stylesheet">
@@ -69,6 +69,8 @@
              </li>
              <li><span class="blink">SFMC APIs</span> <p>Learn about SFMC REST and SOAP API from here on <a href="https://www.postman.com/salesforce-developers/workspace/salesforce-developers/folder/14448118-4571ab6a-0940-40e7-be5f-47edce80c88d?ctx=documentation">Salesforce Developers</a>. </p>
              </li>
+             <li><span class="blink">Coding playground</span><p>You may feel Practicing AMPscript / SSJS / WSproxy some times feel tedious task. Especially for the fact of re-publishing the Cloud pages everytime you make an edit!. Hence refer this awesome trick which might save you tons of minute. <a href="https://www.marketingdeveloper.io/garden/develop-sfmc-cloudpages-using-github-private-repositories">Develop Cloudpages using Github private repository</a>by <a href="https://www.linkedin.com/in/susane-antunes">Susane Antunes</a>. </p>
+             </li>
            </ul>
 
            <h1><br><br></h1>
@@ -117,6 +119,22 @@ ENDIF</code></pre>
 %%[ENDIF]%%</code></pre>
 <br>
 
+<!-- AMP Block5 -->
+<br>
+<p>Retrieve ALL records of a Data Extension and make perform Upsert/any action</p>
+<pre><code class="language-js">//AMPscript - Snippet - LOOP though DataExtension rows and get specific field in each row
+%%[
+  SET @DE_rows = Lookuprows(&quot;Name_of_your_DE&quot;,&quot;default&quot;,&quot;1&quot;) //Make sure to create a field called &#39;default&#39; with default value = &#39;1&#39;
+  SET @DE_rowsCount = Rowcount(@DE_rows)
+
+  For @i = 1 to @DE_rowsCount do
+      SET @DE_row = Row(@DE_rows,@i)
+      SET @DE_field_name = Field(@DE_row,&#39;SubscriberKey&#39;) //In my case I am fetching the field called &#39;SubscriberKey&#39;
+      //Output(Concat(@DE_field_name,&quot;&lt;br/&gt;&quot;))  --&gt; Uncomment this to check whether your loop fetching the required field
+      // UpdateSingleSalesforceObject(&#39;Contact&#39;,@DE_field_name,&#39;Vis_custom_field_for_journey__c&#39;,&#39;FALSE&#39;) --&gt; PLACE your code to perform your required action.
+  NEXT @i
+]%%</code></pre>
+<br>
       </section>
       <b class="hr anim"></b>
       <section id="ssjs" class="main-section">

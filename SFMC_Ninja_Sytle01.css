@@ -147,3 +147,9 @@ code {
 }
 
 .use-case {color:#08bb2ff3;font-weight: 700;}
+
+.blink {
+  animation: blink 2s linear infinite;
+}
+
+@keyframes blink { 50% {opacity: 0;} }
