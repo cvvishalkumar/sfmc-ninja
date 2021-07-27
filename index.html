@@ -154,7 +154,29 @@ ENDIF</code></pre>
   NEXT @i
 ]%%</code></pre>
 <br>
-      </section>
+
+<!-- AMP Block6 -->
+<br>
+<p>Passing encrypted parameters to Cloudpages | From Email]</p>
+<pre><code class="language-js">//Parameters will be encrypted in URL [Example: xxxx.com?qs=2f6e3f80d6017db21xxxxxxxxxxx]
+&lt;a href=&quot;%%=RedirectTo(CloudPagesURL(xxx,&#39;subkey&#39;,_subscriberkey))=%%&quot;&gt;Go to cloud page&lt;/a&gt;
+// On cloud page : below works only for GET methodset 
+@subkey = RequestParameter(&quot;subkey&quot;)
+
+
+//Parameters will be visible in the URL [?name=VishalKumarCV]
+&lt;a href=&quot;%%=Concat(RedirectTo(CloudpagesURL(xxx)),&#39;&amp;name=&#39;,@varname)=%%&quot;&gt;Go to cloud page&lt;/a&gt;
+// On cloud page : below works only for GET method
+set @name = QueryParameter(&quot;name&quot;)
+
+
+//Works only if coming from CloudPagesURL method.
+set @SubscriberKey = AttributeValue(&#39;_SubscriberKey&#39;)</code></pre>
+<br>
+<!-- ************************************************* -->
+<!-- ************************************************* -->
+
+</section>
       <b class="hr anim"></b>
       <section id="ssjs" class="main-section">
         <header>SSJS - Server Side Java Script</header>
