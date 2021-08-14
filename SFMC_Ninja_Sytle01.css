@@ -136,7 +136,7 @@ code {
   }
 
   #navbar ul {
-    height: 75%;
+    /* height: 75%; */
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -153,3 +153,14 @@ code {
 }
 
 @keyframes blink { 50% {opacity: 0;} }
+
+
+/* Handcrafted */
+
+.typing {
+  position: relative;
+  font-size: 10px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #c5fa08;
+  float: right;
+}
