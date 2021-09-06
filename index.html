@@ -213,10 +213,116 @@ try{
 &lt;/script&gt;</code></pre>
 <br>
 
-<!-- <br>
-SSJS block2
-<pre><code class="language-js" ></code></pre>
-<br> -->
+<br>
+<p>Contacts deletion using SSJS/Automation</p>
+<pre><code class="language-js"><script language="javascript" runat="server"> 
+  Platform.Load("core","1.1.5");
+  
+  try{
+  /* var eid = Platform.Function.AuthenticatedEnterpriseID(); use this if running from parent BU else hardcode as below*/
+  var eid = '51000xxxx';
+  var deKey = '_Your_DEkey_from_which_Contacts_to_be_Deleted';
+  var clientId = 'xxxxxxxxxxxxxxxxxxxxxx';
+  var clientSecret = 'xxxxxxxxxxxxxxxxxx';
+  var authBaseUrl = 'https://xxxxxxxxxxxxxxxxx.auth.marketingcloudapis.com/';
+  
+  var authUrl = authBaseUrl + 'v2/token/'
+  var contentType = 'application/json';
+  
+  payload =  '{';
+  payload += ' "grant_type": "client_credentials",';
+  payload += ' "client_id":"' + clientId + '",';
+  payload += ' "client_secret":"' + clientSecret + '",';
+  payload += ' "scope": "list_and_subscribers_write",';
+  payload += ' "account_id": "' + eid + '" ';
+  payload += '}';
+  
+  var result = HTTP.Post(authUrl, contentType, payload);
+  var response = result["Response"][0];
+  var accessToken = Platform.Function.ParseJSON(response).access_token;
+  var restUrl = Platform.Function.ParseJSON(response).rest_instance_url;
+  
+  Platform.Response.Write(" response: " + response);
+  Platform.Response.Write("\n\n token: " + accessToken);
+  Platform.Response.Write("\n\n rest URL: " + restUrl);
+  
+  var headerNames = ["Authorization"];
+  var headerValues = ["Bearer " + accessToken];
+  
+  payload =  '{';
+  payload += '   "deleteOperationType": "ContactAndAttributes",';
+  payload += '   "targetList": { ';
+  payload += '      "listType": { ';
+  payload += '         "listTypeID":3';
+  payload += '      },';
+  payload += '   "listKey": "' + deKey + '"';
+  payload += '   },';
+  payload += '   "deleteListWhenCompleted":false,';
+  payload += '   "deleteListContentsWhenCompleted":true';
+  payload += '}';
+  
+  var deleteEndpoint = restUrl + 'contacts/v1/contacts/actions/delete?type=listReference';
+  var result = HTTP.Post(deleteEndpoint, contentType, payload, headerNames, headerValues)
+  result = Stringify(result).replace(/[\n\r]/g, '');
+  Platform.Response.Write("\n\n result: " + result);
+  }
+  catch(e) {  Write(Stringify(e)); }
+  </script></code></pre>
+<br>
+
+<br>
+<p>Run child automations from a Parent automation [using Script Activity]</p>
+<pre><code class="language-js" ><script runat="server">
+  Platform.Load("Core","1.1.1");
+  
+  var automationCustomerKey = "_Customer-key_of_the_automation_to_run_";
+  
+  var rr = Platform.Function.CreateObject("RetrieveRequest");
+  Platform.Function.SetObjectProperty(rr, "ObjectType", "Automation");
+  Platform.Function.AddObjectArrayItem(rr, "Properties", "ProgramID");
+  Platform.Function.AddObjectArrayItem(rr, "Properties", "CustomerKey");
+  Platform.Function.AddObjectArrayItem(rr, "Properties", "Status");
+  
+  var sfp = Platform.Function.CreateObject("SimpleFilterPart");
+  Platform.Function.SetObjectProperty(sfp, "Property", "CustomerKey");
+  Platform.Function.SetObjectProperty(sfp, "SimpleOperator", "equals");
+  Platform.Function.AddObjectArrayItem(sfp, "Value", automationCustomerKey);
+  
+  Platform.Function.SetObjectProperty(rr, "Filter", sfp);
+  var retrieveStatus = [0,0,0];
+  var automationResultSet = Platform.Function.InvokeRetrieve(rr, retrieveStatus);
+  var ObjectID = automationResultSet[0]["ObjectID"];
+  var Status = automationResultSet[0]["Status"];
+  
+  if (ObjectID != "null") 
+  {
+      /* Code Status
+      -1 = Error, 0 = BuildingError, 1 = Building, 2 = Ready, 3 = Running, 4 = Paused,
+       5 = Stopped, 6 = Scheduled, 7 = Awaiting Trigger, 8 = InactiveTrigger
+      */
+  
+      if (Status == 2) 
+      {
+          var obj = Platform.Function.CreateObject("Automation");
+          Platform.Function.SetObjectProperty(obj, "ObjectID", ObjectID);
+          var po = Platform.Function.CreateObject("PerformOptions");
+          var performResult = [0,0,0];
+          var performStatus = Platform.Function.InvokePerform(obj, "start", performResult, po);
+      }
+  
+      else
+      {
+          // already running
+      }
+  
+  } 
+  else 
+  {
+     // automation not found
+  }
+  </script></code></pre>
+<br>
+
       </section>
       <b class="hr anim"></b>
 <section id="apis" class="main-section">
