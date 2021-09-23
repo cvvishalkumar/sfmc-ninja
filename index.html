@@ -232,6 +232,51 @@ try{
 &lt;/script&gt;</code></pre>
 <br>
 
+<p>Parse JSON in SSJS</p>
+<pre><code class="language-js">[
+  {
+    "Prod_ID": 1,
+    "Prod_Name": "Nike",
+    "Prod_Desc": "Shoe"
+  },
+  {
+    "Prod_ID": 5,
+    "Prod_Name": "Puma",
+    "Prod_Desc": "Slipper"
+  },
+  {
+    "Prod_ID": 10,
+    "Prod_Name": "Adidas",
+    "Prod_Desc": "Jacket"
+  }
+]</code></pre>
+<pre><code class="language-js"><script runat="server">
+  Platform.Load("Core","1.1.1");
+  var json = Platform.Request.GetPostData();
+  var products = Platform.Function.ParseJSON(json);
+  
+  if (products.length > 0) {
+    for (var i = 0; i < products.length; i++ ) {
+  
+        var item = products[i];
+        Platform.Variable.SetValue("@Prod_ID",item['Prod_ID']);
+        Platform.Variable.SetValue("@Prod_Name",item['Prod_Name']);
+        Platform.Variable.SetValue("@Prod_Desc",item['Prod_Desc']);
+  </script>
+  
+        <br>Prod_ID = %%=v(@Prod_ID)=%%  || Prod_Name = %%=v(@Prod_Name)=%% || Prod_Desc = %%=v(@Prod_Desc)=%%
+  
+  <script runat="server">
+    }
+  } 
+  else 
+  {
+    Write("no products found");
+  }
+  </script></code></pre>
+<br>
+
+
 <br>
 <p>Contacts deletion using SSJS/Automation</p>
 <pre><code class="language-js"><script language="javascript" runat="server"> 
