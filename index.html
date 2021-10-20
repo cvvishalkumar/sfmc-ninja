@@ -218,6 +218,43 @@ set @SubscriberKey = AttributeValue(&#39;_SubscriberKey&#39;)</code></pre>
       <section id="ssjs" class="main-section">
         <header>SSJS - Server Side Java Script</header>
 
+        <!-- SSJS Interchange b/w AMPscript/SSJS/JS -->
+        <!-- SSJS block1 -->
+<p>Get/Set values between AMPscript/SSJS/AMPscript</p>
+<pre><code class="language-js" >
+  &lt;html&gt;
+    &lt;head&gt;
+    &lt;title&gt;SFMC Ninja&lt;/title&gt;
+            &lt;script runat=&quot;client&quot;&gt;
+                var JS_variable = &quot;Welcome to &quot;;    //Setting Javascript Variable
+                console.log(JS_variable);           //Output to console from Javascript
+            &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+            &lt;h1 id=&#39;header&#39;&gt;&lt;/h1&gt;                   &lt;!-- Placeholder for HTML output --&gt;
+    
+            &lt;script runat=&#39;server&#39; language=&#39;javascript&#39;&gt;
+            Platform.Load(&#39;Core&#39;,&#39;1.1&#39;); 
+            var SSJS_variable = &quot;SFMC &quot;;            //Setting SSJS Variable
+            &lt;/script&gt;
+     
+            %%[SET @AMPscript_variable = &quot;Ninja&quot;]%%  &lt;!-- Setting AMPscript Variable --&gt;
+    
+            &lt;script runat=server&gt;
+                var message = SSJS_variable + Variable.GetValue(&quot;@AMPscript_variable&quot;); //Concat SSJS + AMPscript variables
+                Write(&#39;&lt;script&gt;console.log(&quot;&#39; + message + &#39;&quot;)&lt;/script&gt;&#39;);   //Output to console from SSJS
+            &lt;/script&gt;
+    
+    &lt;script runat=&quot;client&quot;&gt;
+    document.getElementById(&quot;header&quot;).innerHTML = JS_variable + &quot;SFMC &quot; + &quot;%%=v(@AMPscript_variable)=%%&quot;; //HTML output using JS + AMPscript 
+    &lt;/script&gt;
+    
+    &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre>
+<br>
+
+
 <!-- SSJS block1 -->
 <p>Basic syntax of SSJS [with try/catch]</p>
 <pre><code class="language-js" >&lt;script runat=&quot;server&quot;&gt;
