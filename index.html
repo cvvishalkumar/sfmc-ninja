@@ -371,54 +371,35 @@ try{
 <br>
 <p>Run child automations from a Parent automation [using Script Activity]</p>
 <pre><code class="language-js" ><script runat="server">
-  Platform.Load("Core","1.1.1");
-  
-  var automationCustomerKey = "_Customer-key_of_the_automation_to_run_";
-  
-  var rr = Platform.Function.CreateObject("RetrieveRequest");
-  Platform.Function.SetObjectProperty(rr, "ObjectType", "Automation");
-  Platform.Function.AddObjectArrayItem(rr, "Properties", "ProgramID");
-  Platform.Function.AddObjectArrayItem(rr, "Properties", "CustomerKey");
-  Platform.Function.AddObjectArrayItem(rr, "Properties", "Status");
-  
-  var sfp = Platform.Function.CreateObject("SimpleFilterPart");
-  Platform.Function.SetObjectProperty(sfp, "Property", "CustomerKey");
-  Platform.Function.SetObjectProperty(sfp, "SimpleOperator", "equals");
-  Platform.Function.AddObjectArrayItem(sfp, "Value", automationCustomerKey);
-  
-  Platform.Function.SetObjectProperty(rr, "Filter", sfp);
-  var retrieveStatus = [0,0,0];
-  var automationResultSet = Platform.Function.InvokeRetrieve(rr, retrieveStatus);
-  var ObjectID = automationResultSet[0]["ObjectID"];
-  var Status = automationResultSet[0]["Status"];
-  
-  if (ObjectID != "null") 
-  {
-      /* Code Status
-      -1 = Error, 0 = BuildingError, 1 = Building, 2 = Ready, 3 = Running, 4 = Paused,
-       5 = Stopped, 6 = Scheduled, 7 = Awaiting Trigger, 8 = InactiveTrigger
-      */
-  
-      if (Status == 2) 
-      {
-          var obj = Platform.Function.CreateObject("Automation");
-          Platform.Function.SetObjectProperty(obj, "ObjectID", ObjectID);
-          var po = Platform.Function.CreateObject("PerformOptions");
-          var performResult = [0,0,0];
-          var performStatus = Platform.Function.InvokePerform(obj, "start", performResult, po);
-      }
-  
-      else
-      {
-          // already running
-      }
-  
-  } 
-  else 
-  {
-     // automation not found
-  }
-  </script></code></pre>
+   Platform.Load('core', '1');
+   
+   MyFunc = {
+    Init: function(ObjectID,MID) {
+    var obj = {};
+    
+    obj.Perform = function() {
+    try {
+        var program = Platform.Function.CreateObject("Program");
+        var clientID = Platform.Function.CreateObject("ClientID");
+        Platform.Function.SetObjectProperty(clientID, "ID", MID);
+        Platform.Function.SetObjectProperty(clientID, "IDSpecified", "true");
+        Platform.Function.SetObjectProperty(program, "Client", clientID);
+        Platform.Function.SetObjectProperty(program, "ObjectID", ObjectID);
+        Platform.Function.InvokePerform(program, "Start", status);
+        return status[0];
+        }  
+      
+    catch (err) { return err.message; }
+    };
+    return obj;
+    }
+   };
+
+   var myClientID = [MID]; // Your Business UNIT MID
+   var myAutomation = "[automationExternalKey]"; // NOT the name! use ExternalKey
+   var childAutomation = MyFunc.Init(myAutomation,myClientID);
+   childAutomation.Perform();
+</script></code></pre>
 <br>
 
       </section>
