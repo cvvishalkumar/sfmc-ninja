@@ -131,6 +131,24 @@
 Dear %%=v(@Salutation)=%%,</code></pre>
 <br>
 
+<!-- AMP Block -->
+<br>
+<p>Adding comma at 4th position from right</p>
+<pre><code class="language-js">%%[
+  SET @price = "10047654"
+  SET @sl = Length(@price)
+  /* Adding comma at 4th position from right */
+  SET @l = Substring(@price,1,Subtract(@sl,4))
+  SET @r = Substring(@price,Subtract(@sl,3),4)
+  SET @FS = Concat(@l,',',@r)
+]%%
+
+String Length = %%=v(@sl)=%% <br>
+LeftString = %%=v(@l)=%% <br>
+RightString = %%=v(@r)=%% <br>
+FS = %%=v(@FS)=%% <br></code></pre>
+<br>
+
 <!-- AMP Block3 -->
 <br>
 <p>Excluding code execution - SendPreview and test send</p>
