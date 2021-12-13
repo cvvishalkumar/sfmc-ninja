@@ -267,6 +267,23 @@ set @SubscriberKey = AttributeValue(&#39;_SubscriberKey&#39;)</code></pre>
   ]%%</code></pre>
             <br>
 
+            <!-- AMP Block9 -->
+            <br>
+            <p>Greatest of 3</p>
+            <pre><code class="language-js">%%[
+                /* Converting strings to Numbers */
+                set @n1 = add('10',0)
+                set @n2 = add('10.5',0)
+                set @n3 = add('11',0)
+                
+                set @lowestN = iif(@n1 > iif(@n2 > @n3, @n2, @n3), @n1, iif(@n2 > @n3, @n2, @n3))
+                ]%%
+                
+                n1: %%=v(@n1)=%% <br>
+                n2: %%=v(@n2)=%% <br>
+                n3: %%=v(@n3)=%% <br><br>
+                lowest is: %%=v(@lowestN)=%%</code></pre>
+            <br>
             <!-- ************************************************* -->
             <!-- ************************************************* -->
 
