@@ -295,12 +295,55 @@ set @SubscriberKey = AttributeValue(&#39;_SubscriberKey&#39;)</code></pre>
                 lowest is: %%=v(@lowestN)=%%</code></pre>
             <br>
             <!-- ************************************************* -->
+
+            <!-- AMP Block7 -->
+            <!-- <br>
+            <p>Title</p>
+            <pre><code class="language-js">some_code</code></pre>
+            <br> -->
+
             <!-- ************************************************* -->
 
         </section>
         <b class="hr anim"></b>
         <section id="ssjs" class="main-section">
             <header>SSJS - Server Side Java Script</header>
+
+
+            <!-- Block 0 :: START -->
+            <br>
+            <p>SSJS HTTP POST</p>
+            <pre><code class="language-js">&lt;script runat=server&gt;
+                Platform.Load(&quot;core&quot;, &quot;1.1.1&quot;);
+                
+                /* Parameters sent in POST */
+                var First_Name = Request.GetQueryStringParameter(&quot;First_Name&quot;);
+                var Last_Name = Request.GetQueryStringParameter(&quot;Last_Name&quot;);
+                var Email_Address = Request.GetQueryStringParameter(&quot;Email_Address&quot;);
+                
+                /* Comment below once you complete debugging */
+                Write(&#39;First_Name = &#39;+  First_Name);
+                Write(&#39;Last_Name = &#39;+  Last_Name);
+                Write(&#39;Email_Address = &#39;+  Email_Address);
+                
+                var url = &#39;https://enhymz81cmxk5.x.pipedream.net&#39;;
+                
+                /* Make sure NO spaces in below JSON */
+                var payload = &#39;{&quot;First_Name&quot;:&quot;&#39;+First_Name+&#39;&quot;,&quot;Last_Name&quot;:&quot;&#39;+Last_Name+&#39;&quot;,&quot;Email_Address&quot;:&quot;&#39;+Email_Address+&#39;&quot;}&#39;;
+                
+                var req = new Script.Util.HttpRequest(url);
+                req.emptyContentHandling = 0;
+                req.retries = 2;
+                req.continueOnError = true;
+                req.contentType = &quot;application/json&quot;
+                req.setHeader(&quot;API-TOKEN&quot;, &quot;xxxxx&quot;);
+                req.method = &quot;POST&quot;; 
+                req.postData = payload;
+                
+                var resp = req.send();
+                &lt;/script&gt;</code></pre>
+            <br>
+            <!-- Block 0 :: END  -->
 
             <!-- SSJS Interchange b/w AMPscript/SSJS/JS -->
             <!-- SSJS block1 -->
