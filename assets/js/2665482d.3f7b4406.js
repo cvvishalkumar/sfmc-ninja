@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[226],{3304:e=>{e.exports=JSON.parse('{"permalink":"/sfmc-ninja-2024/blog/tags/ssjs","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
