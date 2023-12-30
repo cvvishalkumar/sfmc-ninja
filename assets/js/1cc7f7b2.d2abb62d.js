@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[443],{3242:s=>{s.exports=JSON.parse('{"title":"Ampscript","description":"All Ampscript at a glance.","slug":"/category/ampscript","permalink":"/sfmc-ninja/docs/category/ampscript","navigation":{"next":{"title":"AMPscript snippets","permalink":"/sfmc-ninja/docs/AMPscript/AMPscript-snippets"}}}')}}]);

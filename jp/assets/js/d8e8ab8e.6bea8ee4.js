@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[939],{8181:s=>{s.exports=JSON.parse('{"label":"API","permalink":"/sfmc-ninja/jp/blog/tags/api","allTagsPath":"/sfmc-ninja/jp/blog/tags","count":1}')}}]);

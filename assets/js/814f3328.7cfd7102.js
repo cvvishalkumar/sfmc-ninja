@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[535],{5641:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Ninja Blog 01","permalink":"/sfmc-ninja-2024/blog/Blog 2023-10-27"}]}')}}]);

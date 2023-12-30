@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[620],{9617:e=>{e.exports=JSON.parse('{"permalink":"/sfmc-ninja/fr/blog/tags/am-pscript","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

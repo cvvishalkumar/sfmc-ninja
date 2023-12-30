@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[411],{8501:s=>{s.exports=JSON.parse('[{"label":"AMPscript","permalink":"/sfmc-ninja/jp/blog/tags/am-pscript","count":1},{"label":"SSJS","permalink":"/sfmc-ninja/jp/blog/tags/ssjs","count":1},{"label":"API","permalink":"/sfmc-ninja/jp/blog/tags/api","count":1}]')}}]);

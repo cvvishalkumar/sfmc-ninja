@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[567],{3e3:s=>{s.exports=JSON.parse('{"label":"SSJS","permalink":"/sfmc-ninja/blog/tags/ssjs","allTagsPath":"/sfmc-ninja/blog/tags","count":1}')}}]);
